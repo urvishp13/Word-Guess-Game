@@ -1,31 +1,7 @@
 var artistForGame;
 
-// Create new game settings
-async function startNewGame(newSetOfGuesses) {
-    var instructions = document.getElementById('instructions');
-    // Starting instructions for game
-    instructions.innerHTML = "Press any key to get started!";
-    // Clear letters guessed
-    document.getElementById('letters-guessed').innerHTML = "";
-    // Reset guesses to starting number of guesses
-    document.getElementById('guesses-left').innerHTML= newSetOfGuesses;
-    // After any key pressed   
-    await (new Promise(resolve => {
-            document.addEventListener('keydown', (event) => {
-            // Change the instructions
-            instructions.innerHTML = "Type the lowercase letter that you think is in this name."
-            // Choose new Artist name from storage
-            artistForGame = "beyonce";
-            // Display the Artist name with blanks instead of letters
-                // Add the string `_ ` n number of times with the end trimmed --> n is the length of the name
-            document.getElementById('word').innerHTML = "_ ".repeat(artistForGame.length).trimEnd();
-            resolve();
-            });
-        })
-    );
-}
+var instructions = document.getElementById('instructions');
 
-/* Going to be used to add guessed letters to this area */
 var lettersGuessedArea = document.getElementById('letters-guessed');
 
 var guessesLeftArea = document.getElementById('guesses-left');
@@ -40,8 +16,19 @@ startNewGame(newSetOfGuesses);
 // When Player guesses letter in Artist's name i.e. pressing a key
 document.addEventListener('keydown', (event) => {
     console.log(artistForGame);
+    console.log(display.innerHTML);
     console.log("letter pressed: " + event.key);
     let letterGuessed = event.key;
+    if (instructions.innerHTML === "Press any key to get started!") {
+        instructions.innerHTML = "Type the lowercase letter that you think is in this name."
+        // Choose new Artist name from storage
+        var names = ['be','ac','ed','degdhdi'];
+        artistForGame = names[Math.floor(Math.random() * 4)];
+        // Display the Artist name with blanks instead of letters
+            // Add the string `_ ` n number of times with the end trimmed --> n is the length of the name
+        document.getElementById('word').innerHTML = "_ ".repeat(artistForGame.length).trimEnd();
+        return;
+    }
     // If name fully guessed
     if (!display.innerHTML.includes("_")) {
         // YOU WON!
@@ -86,11 +73,24 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-// Used to replace the underscore in the display with the correctly guessed letter
-function replaceBlankAt(index,letterGuessed) {
-    var display = document.getElementById('word').innerHTML;
+// Create new game settings
+function startNewGame(newSetOfGuesses) {
+    // Clear display
+    display.innerHTML = "";
+    // Starting instructions for game
+    instructions.innerHTML = "Press any key to get started!";
+    // Clear letters guessed
+    document.getElementById('letters-guessed').innerHTML = "";
+    // Reset guesses to starting number of guesses
+    document.getElementById('guesses-left').innerHTML= newSetOfGuesses;
+}
 
-    var arrayOfDisplay = display.split(" ");
-    arrayOfDisplay.splice(index, 1, letterGuessed);
-    display.innerHTML = arrayOfDisplay.join(" ");
+// Used to replace the underscore in the display with the correctly guessed letter
+function replaceBlankAt(index,letterCorrectlyGuessed) {
+    //console.log(display.innerHTML);
+    var arrayOfDisplayLetters = display.innerHTML.split(" ");
+    //console.log("split display: " + arrayOfDisplayLetters);
+    arrayOfDisplayLetters[index] = letterCorrectlyGuessed;
+    display.innerHTML = arrayOfDisplayLetters.join(" ");
+    //console.log("rejoined display: " + display.innerHTML);
 }
