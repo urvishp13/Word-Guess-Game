@@ -1,7 +1,5 @@
 var artistForGame;
 
-var instructions = document.getElementById('instructions');
-
 var lettersGuessedArea = document.getElementById('letters-guessed');
 
 var guessesLeftArea = document.getElementById('guesses-left');
@@ -10,34 +8,43 @@ var newSetOfGuesses = guessesLeftArea.innerHTML; // Capture the starting number 
 // Grab the display of the word (with the blanks) in the game
 var display = document.getElementById('word');
 
+// Create new game settings
+function startNewGame(newSetOfGuesses) {
+    // Clear display
+    display.innerHTML = "";
+    // Clear letters guessed
+    lettersGuessedArea.innerHTML = "";
+    // Reset guesses to starting number of guesses
+    guessesLeftArea.innerHTML= newSetOfGuesses;
+    // Choose new Artist name from storage
+    var names = ['be','ac','ed','degdhdi'];
+    artistForGame = names[Math.floor(Math.random() * 4)];
+    // Display the Artist name with blanks instead of letters
+        // Add the string `_ ` n number of times with the end trimmed --> n is the length of the name
+    display.innerHTML = "_ ".repeat(artistForGame.length).trimEnd();
+}
+
+// Used to replace the underscore in the display with the correctly guessed letter
+function replaceBlankAt(index,letterCorrectlyGuessed) {
+    //console.log(display.innerHTML);
+    var arrayOfDisplayLetters = display.innerHTML.split(" ");
+    //console.log("split display: " + arrayOfDisplayLetters);
+    arrayOfDisplayLetters[index] = letterCorrectlyGuessed;
+    display.innerHTML = arrayOfDisplayLetters.join(" ");
+    //console.log("rejoined display: " + display.innerHTML);
+}
+
 // Start the first game
 startNewGame(newSetOfGuesses);
 
 // When Player guesses letter in Artist's name i.e. pressing a key
 document.addEventListener('keydown', (event) => {
     console.log(artistForGame);
-    console.log(display.innerHTML);
+    //console.log(display.innerHTML);
     console.log("letter pressed: " + event.key);
     let letterGuessed = event.key;
-    if (instructions.innerHTML === "Press any key to get started!") {
-        instructions.innerHTML = "Type the lowercase letter that you think is in this name."
-        // Choose new Artist name from storage
-        var names = ['be','ac','ed','degdhdi'];
-        artistForGame = names[Math.floor(Math.random() * 4)];
-        // Display the Artist name with blanks instead of letters
-            // Add the string `_ ` n number of times with the end trimmed --> n is the length of the name
-        document.getElementById('word').innerHTML = "_ ".repeat(artistForGame.length).trimEnd();
-        return;
-    }
-    // If name fully guessed
-    if (!display.innerHTML.includes("_")) {
-        // YOU WON!
-        document.getElementById('wins').innerHTML++;
-        // Reset the game 
-        artistForGame = startNewGame(newSetOfGuesses);
-    }
     // If letters in name still need to be guessed
-    else {
+    if (display.innerHTML.includes("_")) {
         if (isNaN(letterGuessed) && letterGuessed.toLowerCase() === letterGuessed) { // make sure only lowercase letter keys are pressed
             // If letter guessed is in name
             if (artistForGame.includes(letterGuessed)) {
@@ -71,26 +78,12 @@ document.addEventListener('keydown', (event) => {
             }
         }
     }
+    // If name fully guessed
+    if (!display.innerHTML.includes("_")) {
+        // YOU WON!
+        document.getElementById('wins').innerHTML++;
+        // Display song by Artist
+        // Start new game 
+        startNewGame(newSetOfGuesses);
+    }
 });
-
-// Create new game settings
-function startNewGame(newSetOfGuesses) {
-    // Clear display
-    display.innerHTML = "";
-    // Starting instructions for game
-    instructions.innerHTML = "Press any key to get started!";
-    // Clear letters guessed
-    document.getElementById('letters-guessed').innerHTML = "";
-    // Reset guesses to starting number of guesses
-    document.getElementById('guesses-left').innerHTML= newSetOfGuesses;
-}
-
-// Used to replace the underscore in the display with the correctly guessed letter
-function replaceBlankAt(index,letterCorrectlyGuessed) {
-    //console.log(display.innerHTML);
-    var arrayOfDisplayLetters = display.innerHTML.split(" ");
-    //console.log("split display: " + arrayOfDisplayLetters);
-    arrayOfDisplayLetters[index] = letterCorrectlyGuessed;
-    display.innerHTML = arrayOfDisplayLetters.join(" ");
-    //console.log("rejoined display: " + display.innerHTML);
-}
