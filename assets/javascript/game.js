@@ -1,36 +1,48 @@
 // Create new game settings
-function startNewGame(newSetOfGuesses) {
+async function startNewGame(newSetOfGuesses) {
+    var instructions = document.getElementById('instructions');
+    // Starting instructions for game
+    instructions.innerHTML = "Press any key to get started!";
     // Clear letters guessed
     document.getElementById('letters-guessed').innerHTML = "";
     // Reset guesses to starting number of guesses
     document.getElementById('guesses-left').innerHTML= newSetOfGuesses;
-    // Choose new Artist name from storage
-    var artistName = "beyonce";
-    // Display the Artist name with blanks instead of letters
-        // Add the string `_ ` n number of times with the end trimmed --> n is the length of the name
-    document.getElementById('word').innerHTML = "_ ".repeat(artistName.length()).trimEnd();    
-    
-    return artistName;
+    // After any key pressed   
+    return await (new Promise(resolve => {
+            document.addEventListener('keydown', (event) => {
+            // Change the instructions
+            instructions.innerHTML = "Type the lowercase letter that you think is in this name."
+            // Choose new Artist name from storage
+            let artistName = "beyonce";
+            // Display the Artist name with blanks instead of letters
+                // Add the string `_ ` n number of times with the end trimmed --> n is the length of the name
+            document.getElementById('word').innerHTML = "_ ".repeat(artistName.length).trimEnd();
+            resolve(artistName);
+            });
+        })
+    );
 }
 
 /* Going to be used to add guessed letters to this area */
 var lettersGuessedArea = document.getElementById('letters-guessed');
 
 var guessesLeftArea = document.getElementById('guesses-left');
-var newSetOfGuesses = guessesLeftArea.innerHTML;
+var newSetOfGuesses = guessesLeftArea.innerHTML; // Capture the starting number of guesses
 
 // Grab the display of the word (with the blanks) in the game
 var display = document.getElementById('word');
 
 // Start the first game
-var artistForGame = startNewGame(newSetOfGuesses);
+var artistForGame;
+startNewGame(newSetOfGuesses).then( artistName => { artistForGame = artistName;} );
 
 // When Player guesses letter in Artist's name i.e. pressing a key
 document.addEventListener('keydown', (event) => {
+    // console.log(artistForGame);
     console.log("letter pressed: " + event.key);
     let letterGuessed = event.key;
     // If name fully guessed
-    if (!display.innerHTML.includes(_)) {
+    if (!display.innerHTML.includes("_")) {
         // YOU WON!
         document.getElementById('wins').innerHTML++;
         // Reset the game 
@@ -60,13 +72,13 @@ document.addEventListener('keydown', (event) => {
                 lettersGuessedArea.textContent += `${letterGuessed}, `;
                 // Decrement guesses avaiable by 1
                 document.getElementById('guesses-left').innerHTML--;
-                let numberOfGuesses = guessesLeftArea.textContent;
+                let numberOfGuesses = guessesLeftArea.innerHTML;
                 // If ran out of guesses
                 if (numberOfGuesses == 0) { // double == rather than triple === because numberOfGuesses is a string
                     // Increment losses by 1
                     document.getElementById('losses').innerHTML++;
                     // Start a new game
-                    letterForGame = startNewGame(newSetOfGuesses);
+                    artistForGame = startNewGame(newSetOfGuesses);
                 }
             }
         }
