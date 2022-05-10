@@ -1,3 +1,5 @@
+var artistForGame;
+
 // Create new game settings
 async function startNewGame(newSetOfGuesses) {
     var instructions = document.getElementById('instructions');
@@ -8,16 +10,16 @@ async function startNewGame(newSetOfGuesses) {
     // Reset guesses to starting number of guesses
     document.getElementById('guesses-left').innerHTML= newSetOfGuesses;
     // After any key pressed   
-    return await (new Promise(resolve => {
+    await (new Promise(resolve => {
             document.addEventListener('keydown', (event) => {
             // Change the instructions
             instructions.innerHTML = "Type the lowercase letter that you think is in this name."
             // Choose new Artist name from storage
-            let artistName = "beyonce";
+            artistForGame = "beyonce";
             // Display the Artist name with blanks instead of letters
                 // Add the string `_ ` n number of times with the end trimmed --> n is the length of the name
-            document.getElementById('word').innerHTML = "_ ".repeat(artistName.length).trimEnd();
-            resolve(artistName);
+            document.getElementById('word').innerHTML = "_ ".repeat(artistForGame.length).trimEnd();
+            resolve();
             });
         })
     );
@@ -33,12 +35,11 @@ var newSetOfGuesses = guessesLeftArea.innerHTML; // Capture the starting number 
 var display = document.getElementById('word');
 
 // Start the first game
-var artistForGame;
-startNewGame(newSetOfGuesses).then( artistName => { artistForGame = artistName;} );
+startNewGame(newSetOfGuesses);
 
 // When Player guesses letter in Artist's name i.e. pressing a key
 document.addEventListener('keydown', (event) => {
-    // console.log(artistForGame);
+    console.log(artistForGame);
     console.log("letter pressed: " + event.key);
     let letterGuessed = event.key;
     // If name fully guessed
@@ -57,7 +58,7 @@ document.addEventListener('keydown', (event) => {
                 // Use the formula 2*index-1 to find index to insert letter in display
                 let index = artistForGame.indexOf(letterGuessed); // the first occurrence of the letter in the name. because this is guaranteed at this point
                 do {
-                    display.innerHTML.replaceAt(index, letterGuessed);
+                    replaceBlankAt(index, letterGuessed);
                     index = artistForGame.indexOf(letterGuessed, index+1); // starting search for next repetiion of guessed letter
                 } while (index != -1);
             }
@@ -78,7 +79,7 @@ document.addEventListener('keydown', (event) => {
                     // Increment losses by 1
                     document.getElementById('losses').innerHTML++;
                     // Start a new game
-                    artistForGame = startNewGame(newSetOfGuesses);
+                    startNewGame(newSetOfGuesses);
                 }
             }
         }
@@ -86,7 +87,7 @@ document.addEventListener('keydown', (event) => {
 });
 
 // Used to replace the underscore in the display with the correctly guessed letter
-function replaceAt(index,letterGuessed) {
+function replaceBlankAt(index,letterGuessed) {
     var display = document.getElementById('word').innerHTML;
 
     var arrayOfDisplay = display.split(" ");
