@@ -124,9 +124,9 @@ document.addEventListener('keydown', (event) => {
                 if (numberOfGuesses == 0) { // double == rather than triple === because numberOfGuesses is a string
                     // Display what happened in previous game
                     document.getElementById('realtime-game-info').innerHTML = 
-                    `<p>You Loss</p>
-                     <p style="text-decoration: underline>Previous Game Answe
-                      ${artistForGame}</p?
+                    `<p>You Lost</p>
+                     <p style="text-decoration: underline;">Previous Game Answer</p>
+                     <p>${artistForGame}</p>
                      `;
                     // Start a new game
                     startNewGame(newSetOfGuesses);
@@ -138,7 +138,7 @@ document.addEventListener('keydown', (event) => {
     if (!display.innerHTML.includes("_")) {
         // YOU WON!
         // Display what happened in previous game
-        document.getElementById('prev-game-info').innerHTML = 
+        document.getElementById('realtime-game-info').innerHTML = 
         `<p>You Won!</p>
          <p style="text-decoration: underline;">Previous Game Answer</p>
          <p>${artistForGame}</p>
