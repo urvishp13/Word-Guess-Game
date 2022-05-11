@@ -162,8 +162,6 @@ document.addEventListener('keydown', (event) => {
                 let numberOfGuesses = guessesLeftArea.innerHTML;
                 // If ran out of guesses
                 if (numberOfGuesses == 0) { // double == rather than triple === because numberOfGuesses is a string
-                    // Increment losses by 1
-                    document.getElementById('losses').innerHTML++;
                     // Start a new game
                     startNewGame(newSetOfGuesses);
                 }

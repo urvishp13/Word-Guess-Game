@@ -4,17 +4,23 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <div id="game-play-area">
-        <p id="instructions">Press any key to get started!</p>
-        <p>Wins: <span id="wins"></span></p>
-        <p>Losses: <span id="losses"></span></p>
-        <div id="content">
-            <p style="text-decoration: underline;">current word</p>
-            <div id="word" style="white-space: pre;"></div>
-            <div id="video"></div>
+    <div id="container">
+        <div id="display">
+            <div id="left-section">
+                <div id="video"></div>
+            </div>
+            <div id="right-section">
+                <div id="content">
+                    <p id="instructions">Press any key to get started!</p>
+                    <p>Wins: <span id="wins"></span></p>
+                    <p style="text-decoration: underline;">current word</p>
+                    <div id="word" style="white-space: pre;"></div>
+                    <p>Number of Guesses Remaining: <span id="guesses-left">15</span></p>
+                    <p>Letters Already Guessed:</p>
+                    <div id="letters-guessed"></div>
+                </div>
+            </div>
         </div>
-        <p>Number of Guesses Remaining: <span id="guesses-left">15</span></p>
-        <p>Letters Already Guessed: <span id="letters-guessed"></span></p>
     </div>
 
     <script src="assets/javascript/game.js"></script>
