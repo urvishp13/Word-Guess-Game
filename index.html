@@ -5,10 +5,18 @@
 </head>
 <body>
     <div id="game-play-area">
-        <p id="instructions">"Press any key to get started!"</p>
+        <p id="instructions">Press any key to get started!</p>
         <p>Wins: <span id="wins"></span></p>
         <p>Losses: <span id="losses"></span></p>
-        <div id="word"></div>
+        <div id="content">
+            <p style="text-decoration: underline;">current word</p>
+            <div id="word" style="white-space: pre;"></div>
+            <div id="video">
+                <iframe width="50" height="50" src="" frameborder="0" 
+                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                 allowfullscreen></iframe>
+            </div>
+        </div>
         <p>Number of Guesses Remaining: <span id="guesses-left">15</span></p>
         <p>Letters Already Guessed: <span id="letters-guessed"></span></p>
     </div>

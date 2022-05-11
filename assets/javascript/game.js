@@ -8,6 +8,46 @@ var newSetOfGuesses = guessesLeftArea.innerHTML; // Capture the starting number 
 // Grab the display of the word (with the blanks) in the game
 var display = document.getElementById('word');
 
+// storage of Artist names with URL to their song
+var storage = [
+    {
+        name: 'beyonce',
+        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+    },
+    {
+        name: 'kendrick lamar',
+        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+    },
+    {
+        name: 'jay-z',
+        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+    },
+    {
+        name: 'justin timberlake',
+        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+    },
+    {
+        name: 'ed sheeran',
+        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+    },
+    {
+        name: 'j. cole',
+        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+    },
+    {
+        name: 'rihanna',
+        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+    },
+    {
+        name: 'ariana grande',
+        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+    },
+    {
+        name: 'dua lipa',
+        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+    }    
+];
+
 // Create new game settings
 function startNewGame(newSetOfGuesses) {
     // Clear display
@@ -17,19 +57,68 @@ function startNewGame(newSetOfGuesses) {
     // Reset guesses to starting number of guesses
     guessesLeftArea.innerHTML= newSetOfGuesses;
     // Choose new Artist name from storage
-    var names = ['be','ac','ed','degdhdi'];
-    artistForGame = names[Math.floor(Math.random() * 4)];
+    //console.log(Math.floor(Math.random() * storage.length));
+    artistForGame = storage[Math.floor(Math.random() * storage.length)].name;
     // Display the Artist name with blanks instead of letters
         // Add the string `_ ` n number of times with the end trimmed --> n is the length of the name
-    display.innerHTML = "_ ".repeat(artistForGame.length).trimEnd();
+    display.innerHTML = getBlanksForDisplay(artistForGame).trimEnd();
+}
+
+function getBlanksForDisplay(name) {
+
+    function isLetter(char) {
+        if (char >= "a" && char <= "z") {
+            return true;
+        }
+        return false;
+    }
+    
+    var charArrayOfName = name.split("");
+    //console.log(charArrayOfName);
+    var s = "";
+    charArrayOfName.forEach(element => {
+        //console.log(`${element}: ` + isLetter(element));
+        if (isLetter(element)) {
+            s += "_ ";
+        }
+        else {
+            s += `${element} `;
+        }
+    });
+    return s;
 }
 
 // Used to replace the underscore in the display with the correctly guessed letter
 function replaceBlankAt(index,letterCorrectlyGuessed) {
+    
+    function findAllWordIndeces(name) {
+        var spaceIndeces = [];
+        for (let i = 0; i < name.length; i++) {
+            if (name.charAt(i) === " ") {
+                spaceIndeces.push(i);
+            }
+        }
+        return spaceIndeces;
+    }
+    
     //console.log(display.innerHTML);
     var arrayOfDisplayLetters = display.innerHTML.split(" ");
-    //console.log("split display: " + arrayOfDisplayLetters);
-    arrayOfDisplayLetters[index] = letterCorrectlyGuessed;
+
+    // Find the word the letter is in
+    var wordsInName = findAllWordIndeces(artistForGame);
+    //console.log("wordsInName: " + wordsInName);
+    var wordIn = 0;
+    for (let i = 0; i < wordsInName.length; i++) {
+        if (index > wordsInName[i]) {
+            wordIn = i+1;
+        }
+        else {
+            break;
+        }
+    }
+    arrayOfDisplayLetters[index+wordIn] = letterCorrectlyGuessed;
+
+    console.log("display splited after insertion: " + arrayOfDisplayLetters);
     display.innerHTML = arrayOfDisplayLetters.join(" ");
     //console.log("rejoined display: " + display.innerHTML);
 }
