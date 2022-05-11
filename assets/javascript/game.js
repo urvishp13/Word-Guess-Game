@@ -1,4 +1,5 @@
 var artistForGame;
+var artistSongURL;
 
 var lettersGuessedArea = document.getElementById('letters-guessed');
 
@@ -12,39 +13,39 @@ var display = document.getElementById('word');
 var storage = [
     {
         name: 'beyonce',
-        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+        songURL: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
     },
     {
         name: 'kendrick lamar',
-        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+        songURL: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
     },
     {
         name: 'jay-z',
-        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+        songURL: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
     },
     {
         name: 'justin timberlake',
-        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+        songURL: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
     },
     {
         name: 'ed sheeran',
-        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+        songURL: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
     },
     {
         name: 'j. cole',
-        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+        songURL: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
     },
     {
         name: 'rihanna',
-        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+        songURL: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
     },
     {
         name: 'ariana grande',
-        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+        songURL: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
     },
     {
         name: 'dua lipa',
-        song: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
+        songURL: "https://www.youtube.com/watch?v=2EwViQxSJJQ"
     }    
 ];
 
@@ -57,8 +58,10 @@ function startNewGame(newSetOfGuesses) {
     // Reset guesses to starting number of guesses
     guessesLeftArea.innerHTML= newSetOfGuesses;
     // Choose new Artist name from storage
-    //console.log(Math.floor(Math.random() * storage.length));
-    artistForGame = storage[Math.floor(Math.random() * storage.length)].name;
+    let index = Math.floor(Math.random() * storage.length);
+    artistForGame = storage[index].name;
+    artistSongURL = storage[index].songURL;
+
     // Display the Artist name with blanks instead of letters
         // Add the string `_ ` n number of times with the end trimmed --> n is the length of the name
     display.innerHTML = getBlanksForDisplay(artistForGame).trimEnd();
@@ -73,9 +76,9 @@ function getBlanksForDisplay(name) {
         return false;
     }
     
-    var charArrayOfName = name.split("");
+    let charArrayOfName = name.split("");
     //console.log(charArrayOfName);
-    var s = "";
+    let s = "";
     charArrayOfName.forEach(element => {
         //console.log(`${element}: ` + isLetter(element));
         if (isLetter(element)) {
@@ -92,7 +95,7 @@ function getBlanksForDisplay(name) {
 function replaceBlankAt(index,letterCorrectlyGuessed) {
     
     function findAllWordIndeces(name) {
-        var spaceIndeces = [];
+        let spaceIndeces = [];
         for (let i = 0; i < name.length; i++) {
             if (name.charAt(i) === " ") {
                 spaceIndeces.push(i);
@@ -102,12 +105,12 @@ function replaceBlankAt(index,letterCorrectlyGuessed) {
     }
     
     //console.log(display.innerHTML);
-    var arrayOfDisplayLetters = display.innerHTML.split(" ");
+    let arrayOfDisplayLetters = display.innerHTML.split(" ");
 
     // Find the word the letter is in
-    var wordsInName = findAllWordIndeces(artistForGame);
+    let wordsInName = findAllWordIndeces(artistForGame);
     //console.log("wordsInName: " + wordsInName);
-    var wordIn = 0;
+    let wordIn = 0;
     for (let i = 0; i < wordsInName.length; i++) {
         if (index > wordsInName[i]) {
             wordIn = i+1;
@@ -171,7 +174,7 @@ document.addEventListener('keydown', (event) => {
     if (!display.innerHTML.includes("_")) {
         // YOU WON!
         document.getElementById('wins').innerHTML++;
-        // Display song by Artist
+        // Display image of Artist
         // Start new game 
         startNewGame(newSetOfGuesses);
     }
