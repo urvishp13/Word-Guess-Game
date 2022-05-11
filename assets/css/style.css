@@ -26,9 +26,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-#right-section #content {
     color: #0E3428;
     text-align: center;
     font-weight: bold;
