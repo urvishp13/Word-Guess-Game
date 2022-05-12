@@ -98,6 +98,11 @@ document.addEventListener('keydown', (event) => {
     if (display.innerHTML.includes("_")) {
         if (isNaN(letterGuessed) && letterGuessed.toLowerCase() === letterGuessed) { // make sure only lowercase letter keys are pressed
             document.getElementById('realtime-game-info').innerHTML = "";
+            // If a repeat letter is guessed
+            if (lettersGuessedArea.innerHTML.includes(letterGuessed) || display.innerHTML.includes(letterGuessed)) {
+                document.getElementById('realtime-game-info').innerHTML = "You guessed that letter already";
+                return;
+            }
             // If letter guessed is in name
             if (artistForGame.includes(letterGuessed)) {
                 // Find the index of the letter in the name - find all repetitions of letter --> O(n) - linear traversal of name
@@ -110,11 +115,6 @@ document.addEventListener('keydown', (event) => {
             }
             // If letter guessed isn't in name
             else {
-                // If a repeat letter is guessed
-                if (lettersGuessedArea.textContent.includes(letterGuessed)) {
-                    document.getElementById('realtime-game-info').innerHTML = "You guessed that letter already";
-                    return;
-                }
                 // Add letter guessed to letter-guessed-area
                 lettersGuessedArea.textContent += `${letterGuessed}, `;
                 // Decrement guesses avaiable by 1
