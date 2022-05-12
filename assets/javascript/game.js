@@ -80,7 +80,7 @@ function replaceBlankAt(index,letterCorrectlyGuessed) {
     }
     arrayOfDisplayLetters[index+wordIn] = letterCorrectlyGuessed;
 
-    console.log("display splited after insertion: " + arrayOfDisplayLetters);
+    //console.log("display splited after insertion: " + arrayOfDisplayLetters);
     display.innerHTML = arrayOfDisplayLetters.join(" ");
     //console.log("rejoined display: " + display.innerHTML);
 }
@@ -90,9 +90,9 @@ startNewGame(newSetOfGuesses);
 
 // When Player guesses letter in Artist's name i.e. pressing a key
 document.addEventListener('keydown', (event) => {
-    console.log(artistForGame);
+    //console.log(artistForGame);
     //console.log(display.innerHTML);
-    console.log("letter pressed: " + event.key);
+    //console.log("letter pressed: " + event.key);
     let letterGuessed = event.key;
     // If letters in name still need to be guessed
     if (display.innerHTML.includes("_")) {
