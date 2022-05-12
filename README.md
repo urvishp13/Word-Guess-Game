@@ -8,6 +8,7 @@ This game is a higher-difficulty version of the [Psychic Game](https://github.co
 
 - [ ] Add different genres
 - [ ] Allow Player to select which genre they want to play the game in
+- [ ] Allow Player to choose if they want to play this game or the Psychic Game
 
 <hr>
 
