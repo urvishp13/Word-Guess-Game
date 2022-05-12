@@ -4,6 +4,11 @@ This game involves 2 people: the Player and the Computer. The Player has to gues
 
 This game is a higher-difficulty version of the [Psychic Game](https://github.com/urvishp13/Psychic-Game).
 
+## Future Tasks
+
+[ ] Add different genres
+[ ] Allow Player to select which genre they want to play the game in
+
 <hr>
 
 The Word Guess Game is a Week 2 project of the Fall 2018 Rutgers Coding Bootcamp program. The project was redone in 2022 without recollection of how it was done before.
