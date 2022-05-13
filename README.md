@@ -12,4 +12,4 @@ This game is a higher-difficulty version of the [Psychic Game](https://github.co
 
 <hr>
 
-The Word Guess Game is a Week 2 project of the Fall 2018 Rutgers Coding Bootcamp program. The project was redone in 2022 without recollection of how it was done before.
+The Word Guess Game is a Week 2 project of the Fall 2018 Rutgers Coding Bootcamp program. The project was redone in 2022 without recollection of how it was done before. The frontend design is my own original creation.
